@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.caelum.agenda.ConnectionFactory;
 import br.com.caelum.agenda.modelo.Contato;
 
 public class ContatoDAO {
@@ -17,8 +16,8 @@ public class ContatoDAO {
 	private Connection cn = null;
 	
 	// Inicia a conexão com o Banco de Dados na instanciação de um objeto do tipo ContatoDAO
-	public ContatoDAO() {
-		this.cn = new ConnectionFactory().getConnection();
+	public ContatoDAO(Connection connection) {
+		this.cn = connection;
 	}
 	
 	
@@ -185,14 +184,15 @@ public class ContatoDAO {
 		
 	}
 	
+	/** Deixou de ser usado quando a conexão passou a ser aberta e fechada pelo filtro
 	// Método que encerra a conexão aberta no momento em que se instancia um objeto dessa classe
-	public void closeResources() {
-		if (!this.cn.equals(null)) {
-			try {
-				this.cn.close();
-			} catch (SQLException e) { }
-		}
-	}
+//	public void closeResources() {
+//		if (!this.cn.equals(null)) {
+//			try {
+//				this.cn.close();
+//			} catch (SQLException e) { }
+//		}
+//	} **/
 	
 
 }

@@ -1,5 +1,6 @@
 package br.com.caelum.mvc.logica;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
@@ -13,8 +14,11 @@ public class ListaContatosLogic implements Logica {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		
+		// Obtem a conexão com o banco pelo FiltroConexao
+		Connection cn = (Connection) req.getAttribute("connection");
+		
 		// Obtem a lista de contatos e organiza por ordem alfabetica
-		List<Contato> contatos = new ContatoDAO().getList().stream().sorted((x, y) -> x.getNome().compareTo(y.getNome())).collect(Collectors.toList());
+		List<Contato> contatos = new ContatoDAO(cn).getList().stream().sorted((x, y) -> x.getNome().compareTo(y.getNome())).collect(Collectors.toList());
 		
 		// Adiciona a lista na requisição HTTP
 		req.setAttribute("contatos", contatos);		

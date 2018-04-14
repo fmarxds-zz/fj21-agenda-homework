@@ -1,5 +1,6 @@
 package br.com.caelum.mvc.logica;
 
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -27,10 +28,12 @@ public class ModificaContatoLogic implements Logica {
 		// Instancia um objeto Contato com base nos parametros passados pelo HTTP
 		Contato contato = new Contato(nome, email, endereco, dataNascimento);
 		
+		// Obtem a conexão com o banco pelo FiltroConexao
+		Connection cn = (Connection) req.getAttribute("connection");
+		
 		// Instancia o DAO e altera o contato
-		ContatoDAO dao = new ContatoDAO();
+		ContatoDAO dao = new ContatoDAO(cn);
 		dao.modifyById(contato, id);
-		dao.closeResources();
 		
 		return "mvc?logica=ListaContatosLogic";
 	}

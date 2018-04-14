@@ -1,6 +1,7 @@
 package br.com.caelum.servlet;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -42,10 +43,12 @@ public class AdicionaContatoServlet extends HttpServlet{
 		// Instancia o objeto a ser gravado no Banco de Dados
 		Contato contato = new Contato(nome, email, endereco, dataNascimento);
 		
+		// Obtem a conexão com o banco pelo FiltroConexao
+		Connection cn = (Connection) req.getAttribute("connection");
+		
 		// Instancia a DAO para gravar o contato no banco
-		ContatoDAO dao = new ContatoDAO();
+		ContatoDAO dao = new ContatoDAO(cn);
 		dao.adiciona(contato);
-		dao.closeResources();
 		
 		// Redireciona o usuário para exibir que o contato foi salvo com sucesso
 		RequestDispatcher rd = req.getRequestDispatcher("/contato-adicionado.jsp");

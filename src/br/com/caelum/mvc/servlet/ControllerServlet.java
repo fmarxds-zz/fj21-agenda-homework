@@ -2,6 +2,7 @@ package br.com.caelum.mvc.servlet;
 
 import java.io.IOException;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +14,13 @@ import br.com.caelum.mvc.logica.Logica;
 @SuppressWarnings("serial")
 @WebServlet(name="servlet", urlPatterns={"/mvc"})
 public class ControllerServlet extends HttpServlet {
+	
+	// Inicializa a Servlet (opicional)
+		@Override
+		public void init(ServletConfig config) throws ServletException {
+			super.init(config);
+			log("Iniciando a servlet AdicionaContatoServlet");
+		}
 	
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,5 +47,12 @@ public class ControllerServlet extends HttpServlet {
 		}
 		
 	}
+	
+	// Finaliza a Servlet (opicional)
+		@Override
+		public void destroy() {
+			super.destroy();
+			log("Destruindo a servlet AdicionaContatoServlet");
+		}
 
 }

@@ -1,5 +1,6 @@
 package br.com.caelum.mvc.logica;
 
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -17,10 +18,12 @@ public class ExibeContatoLogic implements Logica {
 		// Recebe o ID do contato que será exibido
 		Long id = Long.parseLong(req.getParameter("id"));
 		
+		// Obtem a conexão com o banco pelo FiltroConexao
+		Connection cn = (Connection) req.getAttribute("connection");
+		
 		// Busca os dados do contato no banco de dados com base em seu ID e instancia um objeto do tipo Contato
-		ContatoDAO dao = new ContatoDAO();
+		ContatoDAO dao = new ContatoDAO(cn);
 		Contato contato = dao.getByID(id);
-		dao.closeResources();
 		
 		// Preparando a data de exibição
 		LocalDate localDate = contato.getDataNascimento();
